@@ -7,6 +7,14 @@ if (!DB_CONNECTION) {
   process.exit(1);
 }
 
-const db = new Sequelize(DB_CONNECTION);
+const db = new Sequelize(DB_CONNECTION, {
+  dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false // Wichtig für Render/Supabase
+    }
+  }
+});
 
 export default db;

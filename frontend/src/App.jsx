@@ -4,20 +4,23 @@ import { useEffect } from 'react'
 
 function App() {
 
+  const URL_BACKEND = "https://ilp-example-backend.onrender.com"
+  // const URL_BACKEND = "http://localhost:3000"
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [user, setUser] = useState("")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   async function handleLogout(){
-    const res = await fetch("http://localhost:3000/logout", {credentials: "include"})
+    const res = await fetch(`${URL_BACKEND}/logout`, {credentials: "include"})
     if (res.ok) setIsLoggedIn(false)
   }
   
 
   async function handleSubmit(e){
     e.preventDefault()
-    const response = await fetch("http://localhost:3000/register", {
+    const response = await fetch(`${URL_BACKEND}/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -31,7 +34,7 @@ function App() {
 
   useEffect(()=> {
     const checkAuth = async() =>{
-       const res = await fetch("http://localhost:3000/getUser", {credentials: "include"})
+       const res = await fetch(`${URL_BACKEND}/getUser`, {credentials: "include"})
        if (res.ok) setIsLoggedIn(true)
     }
   checkAuth()
