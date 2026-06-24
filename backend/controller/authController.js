@@ -25,7 +25,7 @@ export async function registerUser(req,res){
         }
         // Passwort hashen
          const hashedPW = await bcrypt.hash(password, 12);
-         
+
         // User in DB eintragen
         const user = await User.create({
             username,
@@ -37,6 +37,8 @@ export async function registerUser(req,res){
     
         res.cookie("token", token, {
              httpOnly: true,
+             sameSite: "none", // Erlaubt das Senden an andere Domains
+             secure: true 
         });
 
         return res.send({msg: "ok", user: {id: user.id}})
